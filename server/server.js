@@ -3,6 +3,7 @@ const app = express();
 const PORT = process.env.PORT || 5001;
 const koalaRouter = require('./routes/koala.router');
 
+// statics
 app.use(express.json());
 app.use(express.static('server/public'));
 
