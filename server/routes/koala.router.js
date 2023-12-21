@@ -14,7 +14,13 @@ koalaRouter.get('/', (req, res) => {
 
 
 // POST
+koalaRouter.post('/', (req, res) => {
+  let newKoala = req.body;
 
+  res.sendStatus(200);
+  return;
+
+});
 
 // PUT
 
