@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <title>Koalla Holla</title>
     <link rel="stylesheet" href="views/styles.css">
+    <link rel=“shortcut icon” href=”./favicon.ico” type=“image/x-icon”>    
     <script defer src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script defer src="scripts/client.js" charset="utf-8"></script>
   </head>
@@ -21,7 +22,7 @@
       <input type="text" id="genderIn" value="" placeholder="Gender">
       <input type="text" id="readyForTransferIn" value="" placeholder="Transfer">
       <input type="text" id="notesIn" value="" placeholder="Notes">
-      <button type="button" id="addButton">Add Koala</button>
+      <button type="button" id="addButton" onclick="saveKoala(event)">Add Koala</button>
     </form>
     <section>
       <h2>All Koalas</h2>
@@ -33,6 +34,9 @@
             <th>Gender</th>
             <th>Ready for Transfer</th>
             <th>Notes</th>
+            <th>Mark Ready</th>
+            <th>Remove</th>
+            <th class="hidden">Id</th>
           </tr>
         </thead>
         <tbody id="viewKoalas">

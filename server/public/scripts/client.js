@@ -37,6 +37,9 @@ function renderDOM (koalas) {
       <td>${koala.gender}</td>
       <td>${koala.ready_to_transfer}</td>
       <td>${koala.notes}</td>
+      <td></td>
+      <td></td>
+      <td class="hidden">${koala.id}</td>
     </tr>`;
   }
 }

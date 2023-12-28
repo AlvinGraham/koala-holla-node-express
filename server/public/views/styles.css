@@ -1,0 +1,23 @@
+/* Global Styles */
+body {
+  box-sizing: border-box;
+}
+
+/* Table Styling */
+table {
+  border-collapse: collapse;
+}
+th {
+  text-align: left;
+  border: 1px solid black;
+  padding: 5px;
+}
+
+td {
+  border: 1px solid black;
+  padding: 5px;
+}
+
+.hidden {
+  display: none;
+}

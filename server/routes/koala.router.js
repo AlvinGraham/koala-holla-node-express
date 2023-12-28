@@ -9,6 +9,8 @@ console.table(koalaList);
 // GET
 koalaRouter.get('/', (req, res) => {
   res.send(koalaList);
+  res.sendStatus(200);
+  return;
 });
 
 
@@ -16,7 +18,9 @@ koalaRouter.get('/', (req, res) => {
 // POST
 koalaRouter.post('/', (req, res) => {
   let newKoala = req.body;
-
+  koalaList.push(newKoala);
+  console.log('New koalaList:');
+  console.table(koalaList);
   res.sendStatus(200);
   return;
 
