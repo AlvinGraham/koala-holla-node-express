@@ -36,7 +36,7 @@ koalaRouter.post('/', (req, res) => {
 
 // DELETE
 koalaRouter.delete('/ready/:koalaIndex', (req, res) => {
-  console.log('DELETE route with params:', req.params);
+  console.log('/koalas/ready DELETE route with params:', req.params);
   let koalaId = +req.params.koalaIndex;
 
   for (let item of koalaList) {
@@ -48,6 +48,21 @@ koalaRouter.delete('/ready/:koalaIndex', (req, res) => {
   // console.table(koalaList);
   
   res.sendStatus(200);
-})
+});
+
+koalaRouter.delete('/:koalaIndex', (req, res) => {
+  console.log('/koalas/ready DELETE route with params:', req.params);
+  let koalaId = +req.params.koalaIndex;
+  // find index of element with target ID
+  let targetIndex = koalaList.findIndex((element) => +element.id == koalaId);
+
+  //console.log('Target Index:', targetIndex);
+  // delete element 
+  koalaList.splice(targetIndex, 1);
+  console.log('New koalaList (DELETE route');
+  console.table(koalaList);
+
+  res.sendStatus(200);
+});
 
 module.exports = koalaRouter;
