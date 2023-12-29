@@ -12,7 +12,6 @@ function getKoalas(){
   .then((response) => {
     console.log('/koalas GET:');
     console.table(response.data);
-
     renderDOM(response.data);
   })
   .catch((error) =>{
@@ -22,7 +21,6 @@ function getKoalas(){
 
 function saveKoala(){
   console.log( 'in saveKoala' );
-
   // set targetable DOM input elements
   const nameInEle = document.getElementById('nameIn');
   const genderInEle = document.getElementById('genderIn');
@@ -36,8 +34,7 @@ function saveKoala(){
     console.error('Error: Invalid Koala Input');
     alert('Invalid Input: Missing Name, Age, Gender, or Transfer Status');
     return;
-  }
-  
+  }  
   if ((readyForTransferInEle.value).toUpperCase() !== 'Y' && 
       (readyForTransferInEle.value).toUpperCase() !== 'N') {
         console.error('Error: Invalid Transfer Status', 
@@ -134,18 +131,39 @@ function deleteKoalaClk(event) {
   console.log('delete Koala button clicked');
 
   let targetId = event.target.parentElement.parentElement.lastElementChild.innerHTML;
+  let targetName = event.target.parentElement.parentElement.firstElementChild.innerHTML;
   // console.log("Targeted Element:", targetId);
-  axios({
-    method: 'DELETE',
-    url: `/koalas/${targetId}`
+  
+  
+  swal({
+    title: `Deleting Koala ${targetName}`,
+    text: `Are you sure you want to delete Koala ${targetName}? They will be gone forever!`,
+    icon: 'warning',
+    buttons: true,
+    dangerMode: true
   })
-  .then((response) => {
-    console.log('Deleted row of koala ID:', targetId);
-    getKoalas();
-  })
-  .catch((error) => {
-    console.error('Error in /koalas/ready/: DELETE route:', error);
+  .then((confirmDelete) => {
+    if (confirmDelete) {
+      swal({text: `Deleting Koala ${targetName}!`, icon: 'success'});  
+      axios({
+        method: 'DELETE',
+        url: `/koalas/${targetId}`
+      })
+      .then((response) => {
+        console.log('Deleted row of koala ID:', targetId);
+        getKoalas();
+      })
+      .catch((error) => {
+        console.error('Error in /koalas/ready/: DELETE route:', error);
+      });
+    } else {
+      swal(`Koala ${targetName} is saved from deletion`);
+    }
   });
+
+
+
+
   
   
 
