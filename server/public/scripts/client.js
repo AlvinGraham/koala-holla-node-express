@@ -246,5 +246,7 @@ function removeFilterBtnClk(event) {
   event.preventDefault();
   console.log('In removeFilterBtnClk:');
 
+  document.getElementById('nameFilterIn').value = null;
+
   return;
 } // end removeFilterBtnClk(event)

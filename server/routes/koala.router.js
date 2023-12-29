@@ -15,6 +15,8 @@ koalaRouter.get('/', (req, res) => {
 
 
 
+
+
 // POST
 koalaRouter.post('/', (req, res) => {
   let newKoala = req.body;
@@ -46,7 +48,45 @@ koalaRouter.post('/edit/:koalaIndex', (req, res) => {
 
 
   res.sendStatus(200);
-})
+});
+
+koalaRouter.post('/filter', (req, res) => {
+  console.log('/koalas/filter POST route');
+
+  let filterCriteria = req.body;
+  let filteredKoalas = koalaList;  
+
+  if (filterCriteria.name) {
+    filteredKoalas = filteredKoalas.filter((element) => {
+      return element.name.toUpperCase().includes(filterCriteria.name.toUpperCase());
+    });
+  }
+  if (filterCriteria.age) {
+    filteredKoalas = filteredKoalas.filter((element) => {
+      return element.age.toString().includes(filterCriteria.age.toString());
+    });
+  }
+  if (filterCriteria.gender) {
+    filteredKoalas = filteredKoalas.filter((element) => {
+      return element.gender.toUpperCase().includes(filterCriteria.gender.toUpperCase());
+    });
+  }
+  if (filterCriteria.ready_to_transfer) {
+    filteredKoalas = filteredKoalas.filter((element) => {
+      return element.ready_to_transfer.toUpperCase().includes(filterCriteria.ready_to_transfer.toUpperCase());
+    });
+  }
+  if (filterCriteria.notes) {
+    filteredKoalas = filteredKoalas.filter((element) => {
+      return element.notes.toUpperCase().includes(filterCriteria.notes.toUpperCase());
+    });
+  }
+
+  console.log('Filtered koalaList');
+  console.table(filteredKoalas);
+
+  res.send(filteredKoalas);
+});
 
 // PUT
 
@@ -83,5 +123,7 @@ koalaRouter.delete('/:koalaIndex', (req, res) => {
 
   res.sendStatus(200);
 });
+
+
 
 module.exports = koalaRouter;
