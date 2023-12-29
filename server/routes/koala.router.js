@@ -35,5 +35,19 @@ koalaRouter.post('/', (req, res) => {
 
 
 // DELETE
+koalaRouter.delete('/ready/:koalaIndex', (req, res) => {
+  console.log('DELETE route with params:', req.params);
+  let koalaId = +req.params.koalaIndex;
+
+  for (let item of koalaList) {
+    if (item.id === koalaId) {
+      item.ready_to_transfer = 'Y';
+    }
+  }
+  // console.log('New koalaList (DELETE route ..ready/');
+  // console.table(koalaList);
+  
+  res.sendStatus(200);
+})
 
 module.exports = koalaRouter;

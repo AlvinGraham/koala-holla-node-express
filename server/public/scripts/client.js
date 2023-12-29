@@ -107,11 +107,30 @@ function renderDOM (koalas) {
 }
 
 function transferReadyClk(event) {
+  event.preventDefault();
   console.log('transder Koala button clicked');
+
+// get ID
+  let targetId = event.target.parentElement.parentElement.lastElementChild.innerHTML;
+  console.log("Targeted Element:", targetId);
+ 
+
+  axios({
+    method: 'DELETE',
+    url: `/koalas/ready/${targetId}`
+  })
+  .then((response) => {
+    console.log('Modified ready status of koala ID:', targetId);
+    getKoalas();
+  })
+  .catch((error) => {
+    console.error('Error in /koalas/ready/: DELETE route:', error);
+  });
   return;
 }
 
 function deleteKoalaClk(event) {
+  event.preventDefault();
   console.log('delete Koala button clicked');
 
   return;
