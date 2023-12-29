@@ -234,3 +234,17 @@ const editKoalaFrmEle = document.getElementById('editKoala');
 addKoalaFrmEle.classList.remove('hidden');
 editKoalaFrmEle.classList.add('hidden');
 } // end cancelEditKoala(event)
+
+function filterBtnClk(event) {
+  event.preventDefault();
+  console.log('In filterBtnClk:');
+
+  return;
+} // end filterBtnClk(event)
+
+function removeFilterBtnClk(event) {
+  event.preventDefault();
+  console.log('In removeFilterBtnClk:');
+
+  return;
+} // end removeFilterBtnClk(event)

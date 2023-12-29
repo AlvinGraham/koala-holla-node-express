@@ -27,3 +27,9 @@ td button {
   display: block;
   margin: 0 auto;
 }
+
+th button {
+  width: 50%;
+  display: block;
+  margin: 3px auto;
+}

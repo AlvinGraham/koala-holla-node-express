@@ -40,6 +40,17 @@
       <table>
         <thead>
           <tr>
+            <th><input type="text" id="nameFilterIn" value="" placeholder="Name Filter"></th>
+            <th><input type="text" id="ageFilterIn" value="" placeholder="Age Filter"></th>
+            <th><input type="text" id="genderFilterIn" value="" placeholder="Gender Filter"></th>
+            <th><input type="text" id="transferFilterIn" value="" placeholder="Transfer Filter"></th>
+            <th><input type="text" id="notesFilterIn" value="" placeholder="Notes Filter"></th>
+            <th colspan="3">
+              <button type="button" id="filterBtn" onclick="filterBtnClk(event)">FILTER</button>
+              <button type="button" id="removeFilterBtn" onclick="removeFilterBtnClk(event)">REMOVE FILTER</button>
+            </th>
+          </tr>
+          <tr>
             <th>Name</th>
             <th>Age</th>
             <th>Gender</th>
