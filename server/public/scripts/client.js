@@ -1,6 +1,6 @@
-
-
 console.log( 'js' );
+
+getKoalas();
 
 function getKoalas(){
   console.log( 'in getKoalas' );
@@ -84,7 +84,13 @@ function renderDOM (koalas) {
   const viewKoalasEle = document.getElementById('viewKoalas');
 
   viewKoalasEle.innerHTML = null;
+  let transferReadyBlock = null;
   for (let koala of koalas) {
+    if (koala.ready_to_transfer.toUpperCase() === 'N') {
+      transferReadyBlock = '<button onclick="transferReadyClk(event)">Ready for Transfer</button>';
+    } else {
+      transferReadyBlock = '';
+    }
     viewKoalasEle.innerHTML += `
     <tr>
       <td>${koala.name}</td>
@@ -92,10 +98,22 @@ function renderDOM (koalas) {
       <td>${koala.gender}</td>
       <td>${koala.ready_to_transfer}</td>
       <td>${koala.notes}</td>
-      <td></td>
-      <td></td>
+      <td>${transferReadyBlock}</td>
+      <td><button onclick="deleteKoalaClk(event)">Delete</button></td>
       <td class="hidden">${koala.id}</td>
     </tr>`;
   }
+  return;
 }
-getKoalas();
+
+function transferReadyClk(event) {
+  console.log('transder Koala button clicked');
+  return;
+}
+
+function deleteKoalaClk(event) {
+  console.log('delete Koala button clicked');
+
+  return;
+}
+
