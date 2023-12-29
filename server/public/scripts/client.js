@@ -1,3 +1,5 @@
+
+
 console.log( 'js' );
 
 function getKoalas(){
@@ -20,8 +22,61 @@ function getKoalas(){
 
 function saveKoala(){
   console.log( 'in saveKoala' );
-  // axios call to server to get koalas
- 
+
+  // set targetable DOM input elements
+  const nameInEle = document.getElementById('nameIn');
+  const genderInEle = document.getElementById('genderIn');
+  const ageInEle = document.getElementById('ageIn');
+  const readyForTransferInEle = document.getElementById('readyForTransferIn');
+  const notesInEle = document.getElementById('notesIn');
+  
+  // data validation
+  if (!nameInEle.value || !genderInEle.value || !ageInEle.value 
+      || !readyForTransferInEle.value) {
+    console.error('Error: Invalid Koala Input');
+    alert('Invalid Input: Missing Name, Age, Gender, or Transfer Status');
+    return;
+  }
+  
+  if ((readyForTransferInEle.value).toUpperCase() !== 'Y' && 
+      (readyForTransferInEle.value).toUpperCase() !== 'N') {
+        console.error('Error: Invalid Transfer Status', 
+          readyForTransferInEle.value);
+        alert('Invalid Transfer Status: Use Y or N.');
+        return;
+      }
+  // assemble data payload
+  let newKoala = {
+                  name: nameInEle.value,
+                  gender: genderInEle.value,
+                  age: ageInEle.value,
+                  ready_to_transfer: readyForTransferInEle.value,
+                  notes: notesInEle.value
+                }
+
+  // axios call to server to POST koalas
+  axios({
+    method: 'POST',
+    url: '/koalas',
+    data: newKoala
+  })
+  .then((response) => {
+    console.log('POST data:');
+    console.table(newKoala);
+    //clear input fields
+    nameInEle.value = null;
+    genderInEle.value = null;
+    ageInEle.value = null;
+    readyForTransferInEle.value = null;
+    notesInEle.value = null;
+
+    // render Koala List on DOM
+    getKoalas();
+    return;
+  })
+  .catch((error) => {
+    console.error('Error in /koalas POST route:', error);
+  });
 }
 
 function renderDOM (koalas) {

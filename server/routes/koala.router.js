@@ -9,7 +9,7 @@ console.table(koalaList);
 // GET
 koalaRouter.get('/', (req, res) => {
   res.send(koalaList);
-  res.sendStatus(200);
+
   return;
 });
 
@@ -18,6 +18,11 @@ koalaRouter.get('/', (req, res) => {
 // POST
 koalaRouter.post('/', (req, res) => {
   let newKoala = req.body;
+  
+  // assign new ID
+  let newID = koalaList[koalaList.length-1].id + 1;
+  newKoala.id = newID;
+
   koalaList.push(newKoala);
   console.log('New koalaList:');
   console.table(koalaList);
