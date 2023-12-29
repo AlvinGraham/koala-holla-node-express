@@ -31,6 +31,23 @@ koalaRouter.post('/', (req, res) => {
 
 });
 
+koalaRouter.post('/edit/:koalaIndex', (req, res) => {
+  console.log('/koalas/edit POST route with params:', req.params);
+  let koalaId = +req.params.koalaIndex;
+  let targetIndex = koalaList.findIndex((element) => element.id === koalaId);
+  let koalaEdits = req.body;
+
+  koalaList[targetIndex].name = koalaEdits.name;
+  koalaList[targetIndex].gender = koalaEdits.gender;
+  koalaList[targetIndex].age = koalaEdits.age;
+  koalaList[targetIndex].notes = koalaEdits.notes;
+
+  console.log('Koala edited:', koalaList[targetIndex]);
+
+
+  res.sendStatus(200);
+})
+
 // PUT
 
 
