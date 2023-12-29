@@ -189,9 +189,40 @@ function editKoalaBtnClk(event) {
 } //end editKoalaBtnClk(event)
 
 function editKoala(event) {
-event.preventDefault();
-console.log('editKoala(event)');
+  event.preventDefault();
+  console.log('editKoala(event)');
+  // targetable DOM elements
+  const nameEditInEle = document.getElementById('nameEditIn');
+  const ageEditInEle = document.getElementById('ageEditIn');
+  const genderEditInEle = document.getElementById('genderEditIn');
+  const notesEditInEle = document.getElementById('notesEditIn');
+  const targetIdEle = document.getElementById('editId');
 
+  // assemble data payload
+  let koalaEdits = {
+                    name: nameEditInEle.value,
+                    age: ageEditInEle.value,
+                    gender: genderEditInEle.value,
+                    notes: notesEditInEle.value
+  };
+  console.log('Data payload:', koalaEdits);
+
+  axios({
+    method: 'POST',
+    url: `/koalas/edit/${targetIdEle.innerHTML}`,
+    data: koalaEdits
+  })
+  .then((response) => {
+    // clean up
+    cancelEditKoala(event);
+    getKoalas();
+    return;
+  })
+  .catch((error) => {
+    console.error('Error in ../edits/: POST:', error);
+  })
+
+return;
 } //end editKoala(event)
 
 function cancelEditKoala(event) {
