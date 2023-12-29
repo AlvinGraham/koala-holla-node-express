@@ -17,7 +17,7 @@ function getKoalas(){
   .catch((error) =>{
     console.log('Error in /koalas GET:', error);
   });
-} // end getKoalas
+} // end getKoalas()
 
 function saveKoala(){
   console.log( 'in saveKoala' );
@@ -43,13 +43,11 @@ function saveKoala(){
         return;
       }
   // assemble data payload
-  let newKoala = {
-                  name: nameInEle.value,
+  let newKoala = {name: nameInEle.value,
                   gender: genderInEle.value,
                   age: ageInEle.value,
                   ready_to_transfer: readyForTransferInEle.value,
-                  notes: notesInEle.value
-                }
+                  notes: notesInEle.value};
 
   // axios call to server to POST koalas
   axios({
@@ -74,7 +72,7 @@ function saveKoala(){
   .catch((error) => {
     console.error('Error in /koalas POST route:', error);
   });
-}
+} // end saveKoala()
 
 function renderDOM (koalas) {
   // targetable elements
@@ -84,9 +82,9 @@ function renderDOM (koalas) {
   let transferReadyBlock = null;
   for (let koala of koalas) {
     if (koala.ready_to_transfer.toUpperCase() === 'N') {
-      transferReadyBlock = '<button onclick="transferReadyClk(event)">Ready for Transfer</button>';
+      transferReadyBlock = '<button onclick="transferReadyClk(event)">Toggle to READY</button>';
     } else {
-      transferReadyBlock = '';
+      transferReadyBlock = '<button onclick="transferReadyClk(event)">Toggle to NOT READY</button>';
     }
     viewKoalasEle.innerHTML += `
     <tr>
@@ -101,7 +99,7 @@ function renderDOM (koalas) {
     </tr>`;
   }
   return;
-}
+} // renderDOM (koalas)
 
 function transferReadyClk(event) {
   event.preventDefault();
@@ -124,7 +122,7 @@ function transferReadyClk(event) {
     console.error('Error in /koalas/ready/: DELETE route:', error);
   });
   return;
-}
+} // end transferReadyClk(event)
 
 function deleteKoalaClk(event) {
   event.preventDefault();
@@ -161,12 +159,6 @@ function deleteKoalaClk(event) {
     }
   });
 
-
-
-
-  
-  
-
   return;
-}
+} // deleteKoalaClk(event)
 
