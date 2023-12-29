@@ -165,20 +165,38 @@ function deleteKoalaClk(event) {
 
 function editKoalaBtnClk(event) {
   event.preventDefault();
+  console.log('In editKoalaBtnClk(event)');
+  // targetable DOM elements
   const addKoalaFrmEle = document.getElementById('addKoala');
   const editKoalaFrmEle = document.getElementById('editKoala');
-
+  const nameEditInEle = document.getElementById('nameEditIn');
+  const ageEditInEle = document.getElementById('ageEditIn');
+  const genderEditInEle = document.getElementById('genderEditIn');
+  const notesEditInEle = document.getElementById('notesEditIn');
+  const targetId = event.target.parentElement.parentElement.lastElementChild.innerHTML;
+  
   addKoalaFrmEle.classList.add('hidden');
   editKoalaFrmEle.classList.remove('hidden');
-  } //end editKoalaBtnClk(event)
+  
+  // pregenerate form
+  nameEditInEle.value = event.target.parentElement.parentElement.children.item(0).innerHTML;
+  document.getElementById('editKoalaBanner').innerHTML = `Edit Koala 
+   "${event.target.parentElement.parentElement.firstElementChild.innerHTML}" (ID: ${targetId})`;
+  ageEditInEle.value = event.target.parentElement.parentElement.children.item(1).innerHTML;
+  genderEditInEle.value = event.target.parentElement.parentElement.children.item(2).innerHTML;
+  notesEditInEle.value = event.target.parentElement.parentElement.children.item(4).innerHTML;
+  document.getElementById('editId').innerHTML = `${targetId}`;
+} //end editKoalaBtnClk(event)
 
 function editKoala(event) {
 event.preventDefault();
+console.log('editKoala(event)');
 
 } //end editKoala(event)
 
 function cancelEditKoala(event) {
 event.preventDefault();
+console.log('In cancelEditKoalas(event)');
 const addKoalaFrmEle = document.getElementById('addKoala');
 const editKoalaFrmEle = document.getElementById('editKoala');
 

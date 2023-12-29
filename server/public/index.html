@@ -26,13 +26,14 @@
       <button type="button" id="addButton" onclick="saveKoala(event)">Add Koala</button>
     </form>
     <form id="editKoala" class="hidden">
-      <h2 id="editKolaBanner">Edit Koala</h2>
+      <h2 id="editKoalaBanner">Edit Koala</h2>
       <input type="text" id="nameEditIn" value="" placeholder="Name">
       <input type="text" id="ageEditIn" value="" placeholder="Age">
       <input type="text" id="genderEditIn" value="" placeholder="Gender">
       <input type="text" id="notesEditIn" value="" placeholder="Notes">
       <button type="button" id="editButton" onclick="editKoala(event)">Edit Koala</button>
       <button type="button" id="cancelEditButton" onclick="cancelEditKoala(event)">Cancel Edit</button>
+      <span class="hidden" id="editId"></span>
     </form>
     <section>
       <h2>All Koalas</h2>
