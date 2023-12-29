@@ -117,6 +117,7 @@ function transferReadyClk(event) {
   })
   .then((response) => {
     console.log('Modified ready status of koala ID:', targetId);
+    removeFilterBtnClk(event);
     getKoalas();
   })
   .catch((error) => {
@@ -239,6 +240,28 @@ function filterBtnClk(event) {
   event.preventDefault();
   console.log('In filterBtnClk:');
 
+  //assemble data payload
+  let koalaFilters = {
+                      name: document.getElementById('nameFilterIn').value,
+                      age: document.getElementById('ageFilterIn').value,
+                      gender: document.getElementById('genderFilterIn').value,
+                      ready_to_transfer: document.getElementById('transferFilterIn').value,
+                      notes: document.getElementById('notesFilterIn').value}
+
+    axios({
+      method: 'POST',
+      url: '/koalas/filter',
+      data: koalaFilters
+    })
+    .then ((response) => {
+      console.log('Filtered Koalas:');
+      console.table(response.data);
+      renderDOM(response.data);
+
+    })
+    .catch((error) => {
+      console.error('Error in /koalas/filter POST route:', error);
+    });
   return;
 } // end filterBtnClk(event)
 
@@ -247,6 +270,12 @@ function removeFilterBtnClk(event) {
   console.log('In removeFilterBtnClk:');
 
   document.getElementById('nameFilterIn').value = null;
+  document.getElementById('ageFilterIn').value = null;
+  document.getElementById('genderFilterIn').value = null;
+  document.getElementById('transferFilterIn').value = null;
+  document.getElementById('notesFilterIn').value = null;
+
+  getKoalas();
 
   return;
 } // end removeFilterBtnClk(event)
