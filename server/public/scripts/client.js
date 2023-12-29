@@ -133,6 +133,22 @@ function deleteKoalaClk(event) {
   event.preventDefault();
   console.log('delete Koala button clicked');
 
+  let targetId = event.target.parentElement.parentElement.lastElementChild.innerHTML;
+  // console.log("Targeted Element:", targetId);
+  axios({
+    method: 'DELETE',
+    url: `/koalas/${targetId}`
+  })
+  .then((response) => {
+    console.log('Deleted row of koala ID:', targetId);
+    getKoalas();
+  })
+  .catch((error) => {
+    console.error('Error in /koalas/ready/: DELETE route:', error);
+  });
+  
+  
+
   return;
 }
 
