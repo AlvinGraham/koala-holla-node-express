@@ -16,8 +16,14 @@ th {
 td {
   border: 1px solid black;
   padding: 5px;
+  display: flexbox;
 }
 
 .hidden {
   display: none;
+}
+
+td button {
+  display: block;
+  margin: 0 auto;
 }

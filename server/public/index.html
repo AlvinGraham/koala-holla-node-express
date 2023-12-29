@@ -25,6 +25,15 @@
       <input type="text" id="notesIn" value="" placeholder="Notes">
       <button type="button" id="addButton" onclick="saveKoala(event)">Add Koala</button>
     </form>
+    <form id="editKoala" class="hidden">
+      <h2 id="editKolaBanner">Edit Koala</h2>
+      <input type="text" id="nameEditIn" value="" placeholder="Name">
+      <input type="text" id="ageEditIn" value="" placeholder="Age">
+      <input type="text" id="genderEditIn" value="" placeholder="Gender">
+      <input type="text" id="notesEditIn" value="" placeholder="Notes">
+      <button type="button" id="editButton" onclick="editKoala(event)">Edit Koala</button>
+      <button type="button" id="cancelEditButton" onclick="cancelEditKoala(event)">Cancel Edit</button>
+    </form>
     <section>
       <h2>All Koalas</h2>
       <table>
@@ -36,6 +45,7 @@
             <th>Ready for Transfer</th>
             <th>Notes</th>
             <th>Mark Ready</th>
+            <th>Edit Koala</th>
             <th>Remove</th>
             <th class="hidden">ID</th>
           </tr>

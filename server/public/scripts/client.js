@@ -94,6 +94,7 @@ function renderDOM (koalas) {
       <td>${koala.ready_to_transfer}</td>
       <td>${koala.notes}</td>
       <td>${transferReadyBlock}</td>
+      <td><button onclick="editKoalaBtnClk(event)">Edit</button></td>
       <td><button onclick="deleteKoalaClk(event)">Delete</button></td>
       <td class="hidden">${koala.id}</td>
     </tr>`;
@@ -160,5 +161,27 @@ function deleteKoalaClk(event) {
   });
 
   return;
-} // deleteKoalaClk(event)
+} // end deleteKoalaClk(event)
 
+function editKoalaBtnClk(event) {
+  event.preventDefault();
+  const addKoalaFrmEle = document.getElementById('addKoala');
+  const editKoalaFrmEle = document.getElementById('editKoala');
+
+  addKoalaFrmEle.classList.add('hidden');
+  editKoalaFrmEle.classList.remove('hidden');
+  } //end editKoalaBtnClk(event)
+
+function editKoala(event) {
+event.preventDefault();
+
+} //end editKoala(event)
+
+function cancelEditKoala(event) {
+event.preventDefault();
+const addKoalaFrmEle = document.getElementById('addKoala');
+const editKoalaFrmEle = document.getElementById('editKoala');
+
+addKoalaFrmEle.classList.remove('hidden');
+editKoalaFrmEle.classList.add('hidden');
+} // end cancelEditKoala(event)
