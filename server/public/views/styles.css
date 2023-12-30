@@ -1,7 +1,27 @@
 /* Global Styles */
 body {
   box-sizing: border-box;
+  background-color: lightgreen;
 }
+
+/* Header */
+header {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+}
+
+.contactInfo {
+  background-image: url('https://i.makeagif.com/media/8-22-2014/GO_DT4.gif');
+  color: White; 
+  background-size: cover;
+  width: 600px;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+}
+
 
 /* Table Styling */
 table {

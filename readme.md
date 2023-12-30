@@ -1,53 +1,79 @@
-This must stop:
----------------
-![Nevar again](https://i.makeagif.com/media/8-22-2014/GO_DT4.gif)
+# KOALA-HOLLA-NODE-EXPRESS
+# Rescued Koala Tracker
 
+## Description
 
-Koala Holla
-===========
+_Duration: 3 days_
 
-Our client, Koala Holla (1976 Llama Comma Drive, Walla Walla WA) is a non-profit dedicated to the ethical transitioning of koalas from the outdoors (whereupon they may be rained) to urban areas where roofs exist. Your team has been hired to build a web app to handle their terrarium residents.
-
-Technologies
-------------
-* Node
-* Express
-* SQL
-
-Client needs
-------------
-Koala Holla has provided a table of their current inventory:
-
-| id | name    | gender | age | ready_to_transer | notes                            |
-|----|---------|--------|-----|------------------|----------------------------------|
-| 1  | Scotty  | M      | 4   | Y                | Born in Guatemala                |
-| 2  | Jean    | F      | 5   | Y                | Allergic to lots of lava         |
-| 3  | Ororo   | F      | 7   | N                | Loves listening to Paula (Abdul) |
-| 4  | K'Leaf   | NB      | 15  | N                | Never refuses a treat.                  |
-| 5  | Charlie | M      | 9   | Y                | Favorite band is Nirvana         |
-| 6  | Betsy   | F      | 4   | Y                | Has a pet iguana                 |
-
-They need the ability to add a Koala to the database. Make a form with the appropriate info. Save the koala in the database. Think about what data types you'll be needing for your table columns.  
-
-They need the ability for mark a Koala ready for transfer. Each koala in your UI needs a button in that reads 'Ready for Transfer'. When the user clicks on the button, it should update the database for the specific Koala. The 'Ready for Transfer' button should only appear for Koalas that haven't yet been marked ready for transfer.
-
-Delivery
---------
-Upon completion of the project you'll need to provide not only the source (via GitHub url), but also instructions on how the database table should be set up. This can be in a simple `database.sql` file in the repo.
-
-### STRETCH GOALS
-
-1. Ability to delete a specific Koala from the database.  
-2. Confirmation dialog before deleting (research SweetAlert).
-3. Ability to make koalas toggle between ready for transfer and NOT ready for transfer.
-4. Add form validation, additional styling and a README.md.
-5. Client side filtering with a text box
-6. Ability to edit other information (Name, Age, Notes) for existing Koalas in the db.
+This project is a solution to the Prime Digital Academy group project of the same name. The end product meets all specs for baseline and stretch goals. The code challenge instructions are found [here](./INSTRUCTIONS.md).
 
 
 
-### Sample Wireframe
---------
-Your final product may look something like this:
+To complete this project I used the following checklist to break the problem down into steps.
 
-![sample](sample.png)
+Base Mode Steps
+<!-- TO DO -->
+
+Stretch Mode Steps
+- [x] Implement server side data validation
+<!-- TO DO -->
+
+To achieve the stretch goal... <!-- To DO -->
+The styling of the interface was influenced <!-- TO DO -->
+
+
+## Screen Shot
+
+Base Mode Screen Shot
+<!-- ![BASE MODE](./images/baseModeScreenshot.png) -->
+
+Stretch Mode Screen Shot
+<!-- ![STRETCH MODE](./images/stretchModeScreenshot.png) -->
+
+### Prerequisites
+
+- [Node.js](https://nodejs.org/en/)
+- [express](https://expressjs.com/)
+- [sweetAlert] (https://www.npmjs.com/package/sweetalert)
+
+
+## Installation
+ 
+<!-- 1. Open up your editor of choice and run an `npm install`
+2. Initiate the server using `node server/server.js`
+3. navigate to host ip and port in browser (e.g. `127.0.0.1:5000`)
+4. Enjoy!!! -->
+
+## Usage
+
+1. In base mode
+<!--   - Enter numbers into the `First Number` and `Second Number` input fiels of Data Entry / Input area.
+  -  Select an `operator` button (only one can be selected at a time). Selected button will stay depressed so you can remember which you selected.
+  - Press the `=` button and the result will display to the results areas and the entire expression will be written to the server
+  - Press the `C` button to clear the dta entry area without evaluation of expression.  You will have to reselect your operator as well.
+  - In the history area, press the `Clear/Delete Results` button to clear the Result History and delete all results from the server.
+  - In the history area you may slect one of the `displayed expressions` within it's borders to recall that expression to the data entry area.  This will over-write any input currently in the data entry area.
+2. In stretch mode
+  - All functionality remains the same except...
+  - Instead of filling in the number inputs and selecting operator, you may use the `keypad` or type directly into the `Input Expression ` field.
+  - Pressing the `=` button will send the expression to the results area as expected.
+3. Mode Switching
+  - To switch between `base mode` and `stretch mode` press the mode button in the banner marked `Click here for (BASE/STRETCH) MODE`. -->
+
+
+## Built With
+
+1. Server Side
+  - Node.js 
+  - javascript
+  - express
+2. Client Side
+  - HTML
+  - CSS
+  - javascript
+  - Axios
+  - sweetAlert
+
+
+## Acknowledgement
+Thanks to [Prime Digital Academy](www.primeacademy.io) who equipped and helped me to make this application a reality. (Thank your people)
