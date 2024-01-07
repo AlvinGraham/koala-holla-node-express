@@ -22,6 +22,72 @@ koalaRouter.get('/', (req, res) => {
     });
   });
 
+  koalaRouter.get('/filter/', (req, res) => {
+    console.log('/koalas/filter GET route');
+    console.log('req.query', req.query);
+    let filterCriteria = req.query;
+    console.log('filterCriteria:', filterCriteria);
+
+    const queryArgs = [];
+    placeHolderCount = 0;
+
+    // Assemble query text
+    let queryText = `SELECT * FROM "koalas" WHERE ("id" > 0`;
+    if (filterCriteria.name != '') {
+      queryText += ` AND "name" ILIKE $xPHx`;
+      queryArgs.push(`%${filterCriteria.name}%`);
+      placeHolderCount++;
+    }
+    if (filterCriteria.age != '') {
+      queryText += ` AND "age" = $xPHx`;
+      queryArgs.push(+filterCriteria.age);
+      placeHolderCount++
+    }
+    if (filterCriteria.gender != '') {
+      queryText += ` AND "gender" ILIKE $xPHx`;
+      queryArgs.push(`%${filterCriteria.gender}%`);
+      placeHolderCount++;
+    }
+    if (filterCriteria.ready_to_transfer != '') {
+      queryText += ` AND "ready_to_transfer" ILIKE $xPHx`;
+      queryArgs.push(`%${filterCriteria.ready_to_transfer}%`);
+      placeHolderCount++;
+    }
+    if (filterCriteria.notes != '') {
+      queryText += ` AND "notes" ILIKE $xPHx`;
+      queryArgs.push(`%${filterCriteria.notes}%`);
+      placeHolderCount++;
+    }
+    queryText += `) ORDER BY "id" ASC;`;
+
+    // match placeholders
+    for (let count = 1; count <= placeHolderCount; count++) {
+      queryText = queryText.replace('xPHx', count);
+    }
+
+    // Unique Case where all search criteria are NULL
+    if (filterCriteria.name == '' && filterCriteria.age == '' && filterCriteria.gender == '' 
+      && filterCriteria.ready_to_transfer == '' && filterCriteria.notes == '') {
+        queryText = `SELECT * FROM "koalas" ORDER BY "id" ASC;`
+      }
+
+    console.log('queryText: ', queryText);
+    console.log('queryArgs', queryArgs);
+
+    pool.query(queryText, queryArgs)
+    .then((response) => {
+      console.log(response.rows);
+      res.send(response.rows);
+    })
+    .catch((err) => {
+      console.log('ERROR in /filter query', err);
+      res.sendStatus(500);
+    });
+
+  
+    // res.sendStatus(200);
+  });
+
 // POST
 koalaRouter.post('/', (req, res) => {
   let newKoala = req.body;
@@ -53,43 +119,7 @@ koalaRouter.post('/', (req, res) => {
 
 });
 
-koalaRouter.post('/filter', (req, res) => {
-  console.log('/koalas/filter POST route');
 
-  let filterCriteria = req.body;
-  let filteredKoalas = koalaList;  
-
-  if (filterCriteria.name) {
-    filteredKoalas = filteredKoalas.filter((element) => {
-      return element.name.toUpperCase().includes(filterCriteria.name.toUpperCase());
-    });
-  }
-  if (filterCriteria.age) {
-    filteredKoalas = filteredKoalas.filter((element) => {
-      return element.age.toString().includes(filterCriteria.age.toString());
-    });
-  }
-  if (filterCriteria.gender) {
-    filteredKoalas = filteredKoalas.filter((element) => {
-      return element.gender.toUpperCase().includes(filterCriteria.gender.toUpperCase());
-    });
-  }
-  if (filterCriteria.ready_to_transfer) {
-    filteredKoalas = filteredKoalas.filter((element) => {
-      return element.ready_to_transfer.toUpperCase().includes(filterCriteria.ready_to_transfer.toUpperCase());
-    });
-  }
-  if (filterCriteria.notes) {
-    filteredKoalas = filteredKoalas.filter((element) => {
-      return element.notes.toUpperCase().includes(filterCriteria.notes.toUpperCase());
-    });
-  }
-
-  console.log('Filtered koalaList');
-  console.table(filteredKoalas);
-
-  res.send(filteredKoalas);
-});
 
 // PUT
 
@@ -134,7 +164,7 @@ koalaRouter.put('/ready/:koalaIndex', (req, res) => {
     .then((result) => {
       console.log('Result', result.rows[0].ready_to_transfer);
       transferReady = result.rows[0].ready_to_transfer;
-      
+
       if (transferReady.toUpperCase() === 'Y') {
         queryText = `UPDATE "koalas" SET "ready_to_transfer" = 'N' WHERE "id" = $1`;
       } else {
@@ -158,8 +188,6 @@ koalaRouter.put('/ready/:koalaIndex', (req, res) => {
 });
 
 // DELETE
-
-
 koalaRouter.delete('/:koalaIndex', (req, res) => {
   console.log('/koalas/ready DELETE route with params:', req.params);
   let koalaId = req.params.koalaIndex;
@@ -176,7 +204,6 @@ koalaRouter.delete('/:koalaIndex', (req, res) => {
   })
   .catch((err) => {
     console.log('ERROR:', err);
-
     res.sendStatus(500);
   });
 });

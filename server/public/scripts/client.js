@@ -246,12 +246,11 @@ function filterBtnClk(event) {
                       age: document.getElementById('ageFilterIn').value,
                       gender: document.getElementById('genderFilterIn').value,
                       ready_to_transfer: document.getElementById('transferFilterIn').value,
-                      notes: document.getElementById('notesFilterIn').value}
+                      notes: document.getElementById('notesFilterIn').value};
 
     axios({
-      method: 'POST',
-      url: '/koalas/filter',
-      data: koalaFilters
+      method: 'GET',
+      url: `/koalas/filter?name=${koalaFilters.name}&age=${koalaFilters.age}&gender=${koalaFilters.gender}&ready_to_transfer=${koalaFilters.ready_to_transfer}&notes=${koalaFilters.notes}`
     })
     .then ((response) => {
       console.log('Filtered Koalas:');
@@ -260,7 +259,7 @@ function filterBtnClk(event) {
 
     })
     .catch((error) => {
-      console.error('Error in /koalas/filter POST route:', error);
+      console.error('Error in /koalas/filter GET route:', error);
     });
   return;
 } // end filterBtnClk(event)
