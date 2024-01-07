@@ -209,7 +209,7 @@ function editKoala(event) {
   console.log('Data payload:', koalaEdits);
 
   axios({
-    method: 'POST',
+    method: 'PUT',
     url: `/koalas/edit/${targetIdEle.innerHTML}`,
     data: koalaEdits
   })
@@ -220,7 +220,7 @@ function editKoala(event) {
     return;
   })
   .catch((error) => {
-    console.error('Error in ../edits/: POST:', error);
+    console.error('Error in ../edits/: PUT:', error);
   })
 
 return;

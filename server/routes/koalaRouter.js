@@ -30,34 +30,33 @@ koalaRouter.get('/', (req, res) => {
 koalaRouter.post('/', (req, res) => {
   let newKoala = req.body;
   
-  // assign new ID
-  let newID = koalaList[koalaList.length-1].id + 1;
-  newKoala.id = newID;
+  const queryText = `INSERT INTO "koalas" ("name", "gender", "age", "ready_to_transfer", "notes")
+  VALUES
+    ($1, $2, $3, $4, $5);`;
+  const queryArgs = [
+    newKoala.name,
+    newKoala.gender,
+    newKoala.age,
+    newKoala.ready_to_transfer,
+    newKoala.notes
+  ];
 
-  koalaList.push(newKoala);
-  console.log('New koalaList:');
-  console.table(koalaList);
-  res.sendStatus(200);
+  pool
+    .query(queryText, queryArgs)
+    .then((result) => {
+      res.sendStatus(201);
+    })
+    .catch((err) => {
+      console.log('ERROR:', err);
+
+      res.sendStatus(500);
+    });
+  //res.sendStatus(200);
   return;
 
 });
 
-koalaRouter.post('/edit/:koalaIndex', (req, res) => {
-  console.log('/koalas/edit POST route with params:', req.params);
-  let koalaId = +req.params.koalaIndex;
-  let targetIndex = koalaList.findIndex((element) => element.id === koalaId);
-  let koalaEdits = req.body;
 
-  koalaList[targetIndex].name = koalaEdits.name;
-  koalaList[targetIndex].gender = koalaEdits.gender;
-  koalaList[targetIndex].age = koalaEdits.age;
-  koalaList[targetIndex].notes = koalaEdits.notes;
-
-  console.log('Koala edited:', koalaList[targetIndex]);
-
-
-  res.sendStatus(200);
-});
 
 koalaRouter.post('/filter', (req, res) => {
   console.log('/koalas/filter POST route');
@@ -99,6 +98,34 @@ koalaRouter.post('/filter', (req, res) => {
 
 // PUT
 
+koalaRouter.put('/edit/:koalaIndex', (req, res) => {
+  console.log('/koalas/edit POST route with params:', req.params);
+  let koalaId = req.params.koalaIndex;
+//  let targetIndex = koalaList.findIndex((element) => element.id === koalaId);
+  let koalaEdits = req.body;
+
+  const queryText = `UPDATE "koalas" SET ("name", "gender", "age", "notes") = 
+    ($1, $2, $3, $4) WHERE "id" = $5;`
+  const queryArgs = [
+    koalaEdits.name,
+    koalaEdits.gender,
+    koalaEdits.age,
+    koalaEdits.notes,
+    koalaId
+  ];
+  console.log('queryArgs:', queryArgs);
+
+  pool
+    .query(queryText, queryArgs)
+    .then((result) => {
+      // console.log('RESULT', result.rows);
+      res.send(result.rows);
+    })
+    .catch((err) => {
+      console.log('ERROR:', err);
+      res.sendStatus(500);
+    });
+});
 
 // DELETE
 koalaRouter.delete('/ready/:koalaIndex', (req, res) => {
@@ -120,17 +147,31 @@ koalaRouter.delete('/ready/:koalaIndex', (req, res) => {
 
 koalaRouter.delete('/:koalaIndex', (req, res) => {
   console.log('/koalas/ready DELETE route with params:', req.params);
-  let koalaId = +req.params.koalaIndex;
+  let koalaId = req.params.koalaIndex;
   // find index of element with target ID
-  let targetIndex = koalaList.findIndex((element) => +element.id === koalaId);
+  // let targetIndex = koalaList.findIndex((element) => +element.id === koalaId);
 
+  const queryText = `DELETE FROM "koalas" WHERE "id" = $1`;
+  const queryArgs = [koalaId];
+
+  pool
+  .query(queryText, queryArgs)
+  .then((result) => {
+    res.sendStatus(201);
+  })
+  .catch((err) => {
+    console.log('ERROR:', err);
+
+    res.sendStatus(500);
+  });
+  
   //console.log('Target Index:', targetIndex);
   // delete element 
-  koalaList.splice(targetIndex, 1);
-  console.log('New koalaList (DELETE route');
-  console.table(koalaList);
+  // koalaList.splice(targetIndex, 1);
+  // console.log('New koalaList (DELETE route');
+  // console.table(koalaList);
 
-  res.sendStatus(200);
+  // res.sendStatus(200);
 });
 
 
