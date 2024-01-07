@@ -10,16 +10,21 @@ const pool = require('../database/pool');
 
 // GET
 koalaRouter.get('/', (req, res) => {
-  console.log('In /koalas GET Route')
+  console.log('In /koalas GET Route:');
 
-  res.send(koalaList);
-
-  return;
-});
-
-
-
-
+  const queryText = `SELECT * FROM "koalas"`;
+  
+  pool
+    .query(queryText)
+    .then((result) => {
+      // console.log('RESULT', result.rows);
+      res.send(result.rows);
+    })
+    .catch((err) => {
+      console.log('ERROR:', err);
+      res.sendStatus(500);
+    });
+  });
 
 // POST
 koalaRouter.post('/', (req, res) => {
