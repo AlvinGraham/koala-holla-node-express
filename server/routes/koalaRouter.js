@@ -1,13 +1,17 @@
 const express = require('express');
 const koalaRouter = express.Router();
 
-const koalaList = require('../data/koalas');
-console.table(koalaList);
+// const koalaList = require('../data/koalas');
+// console.table(koalaList);
+
 // DB CONNECTION
+const pool = require('../database/pool');
 
 
 // GET
 koalaRouter.get('/', (req, res) => {
+  console.log('In /koalas GET Route')
+
   res.send(koalaList);
 
   return;
