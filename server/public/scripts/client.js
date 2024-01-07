@@ -112,7 +112,7 @@ function transferReadyClk(event) {
  
 
   axios({
-    method: 'DELETE',
+    method: 'PUT',
     url: `/koalas/ready/${targetId}`
   })
   .then((response) => {
@@ -121,7 +121,7 @@ function transferReadyClk(event) {
     getKoalas();
   })
   .catch((error) => {
-    console.error('Error in /koalas/ready/: DELETE route:', error);
+    console.error('Error in /koalas/ready/: PUT route:', error);
   });
   return;
 } // end transferReadyClk(event)
@@ -154,7 +154,7 @@ function deleteKoalaClk(event) {
         getKoalas();
       })
       .catch((error) => {
-        console.error('Error in /koalas/ready/: DELETE route:', error);
+        console.error('Error in /koalas/ready/: PUT route:', error);
       });
     } else {
       swal(`Koala ${targetName} is saved from deletion`);

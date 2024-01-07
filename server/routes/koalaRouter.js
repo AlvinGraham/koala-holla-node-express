@@ -1,18 +1,14 @@
 const express = require('express');
 const koalaRouter = express.Router();
 
-// const koalaList = require('../data/koalas');
-// console.table(koalaList);
-
 // DB CONNECTION
 const pool = require('../database/pool');
-
 
 // GET
 koalaRouter.get('/', (req, res) => {
   console.log('In /koalas GET Route:');
 
-  const queryText = `SELECT * FROM "koalas"`;
+  const queryText = `SELECT * FROM "koalas" ORDER BY "id" ASC`;
   
   pool
     .query(queryText)
@@ -29,6 +25,7 @@ koalaRouter.get('/', (req, res) => {
 // POST
 koalaRouter.post('/', (req, res) => {
   let newKoala = req.body;
+  // console.log('req.body', req.body);
   
   const queryText = `INSERT INTO "koalas" ("name", "gender", "age", "ready_to_transfer", "notes")
   VALUES
@@ -55,8 +52,6 @@ koalaRouter.post('/', (req, res) => {
   return;
 
 });
-
-
 
 koalaRouter.post('/filter', (req, res) => {
   console.log('/koalas/filter POST route');
@@ -127,23 +122,43 @@ koalaRouter.put('/edit/:koalaIndex', (req, res) => {
     });
 });
 
-// DELETE
-koalaRouter.delete('/ready/:koalaIndex', (req, res) => {
-  console.log('/koalas/ready DELETE route with params:', req.params);
+koalaRouter.put('/ready/:koalaIndex', (req, res) => {
+  console.log('/koalas/ready PUT route with params:', req.params);
   let koalaId = +req.params.koalaIndex;
-  let targetIndex = koalaList.findIndex((element) => element.id === koalaId);
-
-  if (koalaList[targetIndex].ready_to_transfer.toUpperCase() === 'Y') {
-    koalaList[targetIndex].ready_to_transfer = 'N';
-  } else {
-    koalaList[targetIndex].ready_to_transfer = 'Y';
-  }
-
-  // console.log('New koalaList (DELETE route ..ready/');
-  // console.table(koalaList);
+  // get current status of koala
+  let queryText = `SELECT "ready_to_transfer" from "koalas" WHERE "id" = $1`;
+  let queryArgs = [koalaId];
+  let transferReady; 
   
-  res.sendStatus(200);
+  pool.query(queryText, queryArgs)
+    .then((result) => {
+      console.log('Result', result.rows[0].ready_to_transfer);
+      transferReady = result.rows[0].ready_to_transfer;
+      
+      if (transferReady.toUpperCase() === 'Y') {
+        queryText = `UPDATE "koalas" SET "ready_to_transfer" = 'N' WHERE "id" = $1`;
+      } else {
+        queryText = `UPDATE "koalas" SET "ready_to_transfer" = 'Y' WHERE "id" = $1`;
+      }
+      
+      // toggle read_to_transfer
+      pool.query(queryText, queryArgs)
+      .then((result) => {    
+        res.sendStatus(200);
+      })
+      .catch((err) => {
+        console.error('ERROR in transfer toggle Query:', err);
+        sendStatus(500);
+      });
+    })
+    .catch((err) => {
+      console.error('ERROR in transferReady Query:', err);
+    });
+
 });
+
+// DELETE
+
 
 koalaRouter.delete('/:koalaIndex', (req, res) => {
   console.log('/koalas/ready DELETE route with params:', req.params);
@@ -164,16 +179,6 @@ koalaRouter.delete('/:koalaIndex', (req, res) => {
 
     res.sendStatus(500);
   });
-  
-  //console.log('Target Index:', targetIndex);
-  // delete element 
-  // koalaList.splice(targetIndex, 1);
-  // console.log('New koalaList (DELETE route');
-  // console.table(koalaList);
-
-  // res.sendStatus(200);
 });
-
-
 
 module.exports = koalaRouter;
